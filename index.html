@@ -1,0 +1,938 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamScape AI - Mystical Dream Interpreter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-purple: #8B5CF6;
+            --deep-purple: #6D28D9;
+            --light-purple: #A78BFA;
+            --blue: #3B82F6;
+            --deep-blue: #1E40AF;
+            --gold: #F59E0B;
+            --light-gold: #FCD34D;
+            --bg-dark: #0F0A1E;
+            --bg-darker: #080514;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background: var(--bg-darker);
+            color: #fff;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #1E1B4B 0%, #4C1D95 50%, #1E1B4B 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--light-purple), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.5)); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--light-purple);
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            padding: 15px 50px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--deep-purple));
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6);
+        }
+
+        /* Dream Input Section */
+        .dream-input-section {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #0F0A1E 0%, #1E1B4B 100%);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--light-purple), var(--light-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--light-purple);
+            margin-bottom: 60px;
+            font-size: 1.2rem;
+        }
+
+        .dream-form {
+            background: rgba(139, 92, 246, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: var(--light-purple);
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            background: rgba(15, 10, 30, 0.6);
+            color: white;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1rem;
+            min-height: 200px;
+            resize: vertical;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-purple);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+        }
+
+        textarea::placeholder {
+            color: rgba(167, 139, 250, 0.5);
+        }
+
+        .interpret-button {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--deep-purple));
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        .interpret-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6);
+        }
+
+        .interpret-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Sound Wave Animation */
+        .sound-wave-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0;
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .sound-wave-container.active {
+            display: flex;
+        }
+
+        .analyzing-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--light-purple);
+            margin-bottom: 30px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        .sound-wave {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            height: 100px;
+        }
+
+        .wave-bar {
+            width: 8px;
+            background: linear-gradient(180deg, var(--primary-purple), var(--gold));
+            border-radius: 4px;
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(1) { animation-delay: 0s; }
+        .wave-bar:nth-child(2) { animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.4s; }
+        .wave-bar:nth-child(6) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(7) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(8) { animation-delay: 0.1s; }
+
+        @keyframes wave {
+            0%, 100% { height: 20px; }
+            50% { height: 80px; }
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+            padding: 60px 0;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .results-container {
+            background: rgba(139, 92, 246, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .results-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--light-gold);
+        }
+
+        .interpretation-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #E5E7EB;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .share-button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid var(--primary-purple);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 500;
+        }
+
+        .share-button:hover {
+            background: rgba(139, 92, 246, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .new-dream-button {
+            display: block;
+            margin: 30px auto 0;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--deep-purple));
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .new-dream-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+        }
+
+        /* Symbol Cards Section */
+        .symbols-section {
+            padding: 100px 0;
+            background: linear-gradient(180deg, #1E1B4B 0%, #0F0A1E 100%);
+        }
+
+        .symbols-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .symbol-card {
+            background: rgba(139, 92, 246, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .symbol-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .symbol-card:hover::before {
+            left: 100%;
+        }
+
+        .symbol-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--gold);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
+        }
+
+        .symbol-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+            filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.5));
+        }
+
+        .symbol-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--light-gold);
+            margin-bottom: 15px;
+        }
+
+        .symbol-meaning {
+            font-size: 0.95rem;
+            color: var(--light-purple);
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            background: var(--bg-darker);
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        footer p {
+            color: var(--light-purple);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .dream-form {
+                padding: 30px 20px;
+            }
+
+            .results-container {
+                padding: 30px 20px;
+            }
+
+            .symbols-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .share-buttons {
+                flex-direction: column;
+            }
+
+            .share-button {
+                width: 100%;
+            }
+        }
+
+        /* Scroll Animation */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--deep-purple));
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Stars Background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>DreamScape AI</h1>
+                <p class="subtitle">Unlock the Mysteries of Your Subconscious Mind</p>
+                <button class="cta-button" onclick="scrollToInput()">Interpret Your Dream</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dream Input Section -->
+    <section class="dream-input-section" id="dreamInput">
+        <div class="container">
+            <h2 class="section-title fade-in-section">Share Your Dream</h2>
+            <p class="section-subtitle fade-in-section">Describe your dream in detail, and let our AI uncover its hidden meanings</p>
+            
+            <div class="dream-form fade-in-section">
+                <form id="dreamForm">
+                    <div class="form-group">
+                        <label for="dreamText">Your Dream</label>
+                        <textarea 
+                            id="dreamText" 
+                            placeholder="I was walking through a mystical forest when suddenly I started to fly above the trees. The sky was painted in shades of purple and gold..."
+                            required
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="interpret-button" id="interpretButton">
+                        ✨ Interpret My Dream
+                    </button>
+                </form>
+            </div>
+
+            <!-- Sound Wave Animation -->
+            <div class="sound-wave-container" id="soundWave">
+                <p class="analyzing-text">Analyzing your dream...</p>
+                <div class="sound-wave">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-section" id="results">
+                <div class="results-container">
+                    <h3 class="results-title">✨ Your Dream Interpretation ✨</h3>
+                    <div class="interpretation-text" id="interpretationText"></div>
+                    
+                    <div class="share-buttons">
+                        <button class="share-button" onclick="shareToTwitter()">🐦 Share on Twitter</button>
+                        <button class="share-button" onclick="shareToFacebook()">📘 Share on Facebook</button>
+                        <button class="share-button" onclick="copyToClipboard()">📋 Copy Interpretation</button>
+                    </div>
+                    
+                    <button class="new-dream-button" onclick="resetForm()">Interpret Another Dream</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dream Symbols Section -->
+    <section class="symbols-section">
+        <div class="container">
+            <h2 class="section-title fade-in-section">Common Dream Symbols</h2>
+            <p class="section-subtitle fade-in-section">Explore the meanings behind popular dream elements</p>
+            
+            <div class="symbols-grid">
+                <div class="symbol-card fade-in-section">
+                    <span class="symbol-icon">💧</span>
+                    <h3 class="symbol-title">Water</h3>
+                    <p class="symbol-meaning">Represents emotions, the unconscious mind, and spiritual cleansing. Calm water suggests peace, while turbulent water indicates emotional turmoil.</p>
+                </div>
+
+                <div class="symbol-card fade-in-section">
+                    <span class="symbol-icon">🕊️</span>
+                    <h3 class="symbol-title">Flying</h3>
+                    <p class="symbol-meaning">Symbolizes freedom, ambition, and breaking free from limitations. The height and ease of flight reflect your level of confidence.</p>
+                </div>
+
+                <div class="symbol-card fade-in-section">
+                    <span class="symbol-icon">🌊</span>
+                    <h3 class="symbol-title">Falling</h3>
+                    <p class="symbol-meaning">Often represents anxiety, loss of control, or fear of failure. May indicate feeling overwhelmed in waking life.</p>
+                </div>
+
+                <div class="symbol-card fade-in-section">
+                    <span class="symbol-icon">🐺</span>
+                    <h3 class="symbol-title">Animals</h3>
+                    <p class="symbol-meaning">Reflect instincts, desires, and primal emotions. Each animal carries unique symbolism based on its characteristics.</p>
+                </div>
+
+                <div class="symbol-card fade-in-section">
+                    <span class="symbol-icon">🏠</span>
+                    <h3 class="symbol-title">Houses</h3>
+                    <p class="symbol-meaning">Represent the self and different aspects of your personality. Each room symbolizes different areas of your life.</p>
+                </div>
+
+                <div class="symbol-card fade-in-section">
+                    <span class="symbol-icon">🌙</span>
+                    <h3 class="symbol-title">Moon</h3>
+                    <p class="symbol-meaning">Symbolizes intuition, femininity, and the mystical. A full moon represents completion and enlightenment.</p>
+                </div>
+
+                <div class="symbol-card fade-in-section">
+                    <span class="symbol-icon">🔑</span>
+                    <h3 class="symbol-title">Keys</h3>
+                    <p class="symbol-meaning">Represent opportunities, solutions, and access to hidden knowledge or locked potential within yourself.</p>
+                </div>
+
+                <div class="symbol-card fade-in-section">
+                    <span class="symbol-icon">🌺</span>
+                    <h3 class="symbol-title">Flowers</h3>
+                    <p class="symbol-meaning">Symbolize growth, beauty, and the blossoming of new ideas or relationships. Each flower type has unique meanings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 DreamScape AI. Explore the infinite landscapes of your mind.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Create animated stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 100;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        createStars();
+
+        // Scroll to input
+        function scrollToInput() {
+            document.getElementById('dreamInput').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Fade in sections on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-section').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Dream interpretation logic
+        const dreamInterpretations = {
+            water: [
+                "The presence of water in your dream suggests a deep connection with your emotions. You may be processing feelings that have been beneath the surface.",
+                "Water flowing through your dream indicates that you're in a period of emotional renewal and spiritual cleansing."
+            ],
+            flying: [
+                "Flying in your dream represents your desire for freedom and transcendence. You're ready to rise above current challenges.",
+                "The act of flying suggests you're gaining a new perspective on life and feeling liberated from constraints."
+            ],
+            falling: [
+                "Falling in your dream may indicate feelings of losing control in some aspect of your life. It's time to ground yourself.",
+                "This descent represents a need to let go of something that no longer serves you, making way for new growth."
+            ],
+            animal: [
+                "Animals in your dream represent your primal instincts and untamed aspects of your personality seeking expression.",
+                "The animal presence symbolizes qualities you need to embrace or be aware of in your waking life."
+            ],
+            forest: [
+                "The forest represents the unknown aspects of your psyche - mysterious, full of potential, and ripe for exploration.",
+                "Trees in your dream symbolize growth, stability, and your connection to nature and your roots."
+            ],
+            house: [
+                "The house in your dream represents your sense of self. Different rooms reflect different aspects of your personality.",
+                "This dwelling symbolizes security, comfort, and the foundation you've built in your life."
+            ],
+            darkness: [
+                "Darkness in your dream suggests you're exploring unknown territories within yourself - embrace this journey of self-discovery.",
+                "The shadow elements represent hidden potential and aspects of yourself waiting to be illuminated."
+            ],
+            light: [
+                "Light in your dream signifies enlightenment, clarity, and spiritual awakening. Truth is revealing itself to you.",
+                "This radiance represents hope, guidance, and the divine wisdom available to you."
+            ],
+            people: [
+                "The people in your dream often represent different facets of yourself or relationships that need attention.",
+                "These figures may be messengers from your subconscious, offering insights about your connections."
+            ],
+            chase: [
+                "Being chased suggests you're avoiding confronting something important in your waking life. Face it with courage.",
+                "This pursuit represents unresolved issues or fears that are demanding your attention."
+            ],
+            death: [
+                "Death in dreams rarely means literal death - it symbolizes transformation, endings, and powerful new beginnings.",
+                "This profound symbol indicates you're releasing old patterns to make space for rebirth and renewal."
+            ]
+        };
+
+        function generateInterpretation(dreamText) {
+            const text = dreamText.toLowerCase();
+            let interpretation = "✨ Your dream carries profound symbolism and messages from your subconscious. ";
+            
+            // Check for keywords and add relevant interpretations
+            const keywords = Object.keys(dreamInterpretations);
+            const foundKeywords = keywords.filter(keyword => 
+                text.includes(keyword) || text.includes(keyword + 's')
+            );
+
+            if (foundKeywords.length > 0) {
+                foundKeywords.forEach((keyword, index) => {
+                    const randomInterpretation = dreamInterpretations[keyword][
+                        Math.floor(Math.random() * dreamInterpretations[keyword].length)
+                    ];
+                    interpretation += randomInterpretation + " ";
+                });
+            } else {
+                // Generic interpretation
+                interpretation += "Your dream reveals a rich tapestry of subconscious imagery. The symbols present suggest you're in a period of personal transformation and growth. ";
+                interpretation += "Pay attention to the emotions you felt during this dream - they hold important clues about your current life situation. ";
+                interpretation += "The universe is communicating with you through these nocturnal visions, offering guidance for your waking journey. ";
+            }
+
+            interpretation += "\n\n🌟 Remember: Dreams are deeply personal. Trust your intuition about what resonates most strongly with your current life experience. ";
+            interpretation += "Your subconscious mind is a wise guide, speaking to you in the language of symbols and metaphors.";
+
+            return interpretation;
+        }
+
+        // Form submission
+        document.getElementById('dreamForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const dreamText = document.getElementById('dreamText').value;
+            const interpretButton = document.getElementById('interpretButton');
+            const soundWave = document.getElementById('soundWave');
+            const results = document.getElementById('results');
+            
+            // Disable button and show loading
+            interpretButton.disabled = true;
+            interpretButton.textContent = '✨ Interpreting...';
+            
+            // Show sound wave animation
+            soundWave.classList.add('active');
+            results.classList.remove('active');
+            
+            // Simulate AI processing
+            setTimeout(() => {
+                const interpretation = generateInterpretation(dreamText);
+                document.getElementById('interpretationText').textContent = interpretation;
+                
+                // Hide sound wave and show results
+                soundWave.classList.remove('active');
+                results.classList.add('active');
+                
+                // Reset button
+                interpretButton.disabled = false;
+                interpretButton.textContent = '✨ Interpret My Dream';
+                
+                // Scroll to results
+                results.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 3000);
+        });
+
+        // Share functions
+        function shareToTwitter() {
+            const text = "I just interpreted my dream with DreamScape AI! 🌙✨ Discover the mysteries of your subconscious mind.";
+            const url = window.location.href;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+            showToast('Opening Twitter...');
+        }
+
+        function shareToFacebook() {
+            const url = window.location.href;
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+            showToast('Opening Facebook...');
+        }
+
+        function copyToClipboard() {
+            const interpretationText = document.getElementById('interpretationText').textContent;
+            navigator.clipboard.writeText(interpretationText).then(() => {
+                showToast('Interpretation copied to clipboard! ✨');
+            }).catch(() => {
+                showToast('Failed to copy. Please try again.');
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('dreamForm').reset();
+            document.getElementById('results').classList.remove('active');
+            document.getElementById('dreamInput').scrollIntoView({ behavior: 'smooth' });
+            showToast('Ready for your next dream! 🌙');
+        }
+
+        // Toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add hover effect to symbol cards
+        document.querySelectorAll('.symbol-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const meaning = this.querySelector('.symbol-meaning');
+                const title = this.querySelector('.symbol-title').textContent;
+                showToast(`${title}: Tap to explore more in your dreams! 🌟`);
+            });
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add typing animation to subtitle
+        const subtitle = document.querySelector('.subtitle');
+        const subtitleText = subtitle.textContent;
+        subtitle.textContent = '';
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < subtitleText.length) {
+                subtitle.textContent += subtitleText.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        setTimeout(typeWriter, 1000);
+    </script>
+</body>
+</html>
